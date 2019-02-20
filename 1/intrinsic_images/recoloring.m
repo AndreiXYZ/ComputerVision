@@ -10,4 +10,10 @@ for i=1:rows
 end
 
 new_img = albedo.*shading;
+subplot(1, 2, 1);
+imshow(img);
+title('Original Image');
+
+subplot(1, 2, 2);
 imshow(new_img);
+title('Recolored Image');
