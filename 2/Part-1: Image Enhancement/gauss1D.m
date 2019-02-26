@@ -6,7 +6,7 @@ function G = gauss1D( sigma , kernel_size )
     
     %% solution
     x = -floor(kernel_size/2):floor(kernel_size/2);
-    G = 1/(sigma*sqrt(2*pi))*exp(-(x.^2)/(2*sigma^2));
+    G = 1/(sigma*sqrt(2*pi)).*exp(-(x.^2)/(2*sigma^2));
     sumG = sum(G);
     for i=1:kernel_size
         G(i) = G(i)/sumG;
