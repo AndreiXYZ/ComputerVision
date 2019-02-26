@@ -98,4 +98,35 @@ psnr_gauss_3 = myPSNR(img1,gauss_filter_3_sigma_3);
 psnr_gauss_5 = myPSNR(img1,gauss_filter_5_sigma_3);
 psnr_gauss_7 = myPSNR(img1,gauss_filter_7_sigma_3);
 
+%% Gradient computation
+img2 = imread('images/image2.jpg');
+[Gx, Gy, im_mag, im_dir] = compute_gradient(img2);
+% Gx
+figure('name','Gx')
+imshow(Gx);
+hold off
+% Gy
+figure('name','Gy')
+imshow(Gy);
+hold off
+% Magnitude
+figure('name','Magnitude')
+imshow(im_mag);
+hold off
+% Direction
+figure('name','Direction')
+imshow(im_dir);
+%% Second order Derivatives
+img2 = imread('images/image2.jpg');
+method1 = compute_LoG(img2, 1);
+figure('name','Method 1')
+imshow(method1);
+hold off
+figure('name','Method 2')
+method2 = compute_LoG(img2, 2);
+imshow(method2);
+hold off
+figure('name','Method 3')
+method3 = compute_LoG(img2, 3);
+imshow(method3);
 
