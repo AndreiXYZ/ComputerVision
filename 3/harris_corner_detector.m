@@ -3,14 +3,14 @@ function [H, corners] = harris_corner_detector(input_image, threshold)
     img = rgb2gray(im2double(input_image));
     [num_rows, num_cols] = size(img);
     %create Gx and Gy
-    w=3; %size of window
-    stddev=1/2; %stddev of Gaussian
+    w=9; %size of window
+    stddev=2; %stddev of Gaussian
     
     %generate Gaussian filter
     
     
     %for 2d gaussian
-    G = fspecial('gaussian');
+    G = fspecial('gaussian', w, stddev);
     %get its derivatives along both axis
     [Gx Gy] = gradient(G);
     
@@ -73,4 +73,3 @@ function [H, corners] = harris_corner_detector(input_image, threshold)
     hold on;
     plot(corners(:,2), corners(:,1), 'o');
     
-end
