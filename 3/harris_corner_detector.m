@@ -48,11 +48,9 @@ function [H, corners] = harris_corner_detector(input_image, threshold)
         for j=1:num_cols
             %create Q
             Q = [A(i,j) B(i,j); B(i,j) C(i,j)];
-            %get eigenvalues
-            [eigvecs, eigvals] = eig(Q);
             %compute the entry in the H matrix
-            lambda1 = eigvals(1,1);
-            lambda2 = eigvals(2,2);
+            lambda1 = Q(1,1);
+            lambda2 = Q(2,2);
             H(i,j) = lambda1*lambda2-k*((lambda1+lambda2)^2);
         end
     end
