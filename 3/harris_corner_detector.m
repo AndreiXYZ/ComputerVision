@@ -23,8 +23,10 @@ function [H, corners] = harris_corner_detector(input_image, threshold)
     figure;
     subplot(1, 3, 1);
     imshow(i_x, []);
+    title('Derivative along x-axis');
     subplot(1, 3, 2);
     imshow(i_y, []);
+    title('Derivative along y-axis');
     
     %2nd order derivatives
     ix2 = conv2(i_x.^2, G, 'same');
@@ -70,4 +72,5 @@ function [H, corners] = harris_corner_detector(input_image, threshold)
     imshow(input_image);
     hold on;
     plot(corners(:,2), corners(:,1), 'o');
+    title('Detected Corner Points');
     
