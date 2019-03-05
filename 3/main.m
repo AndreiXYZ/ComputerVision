@@ -8,4 +8,24 @@ rot_toy = imread('00000001rot.jpg');
 [H, c1rot] = harris_corner_detector(rot_toy, 1e-6);
 %seems to be rotation invariant for 90 degrees
 
+%% Lucas-Kanade shpere
+image1 = imread('sphere1.ppm');
+image2 = imread('sphere2.ppm');
+v = lucas_kanade(image1, image2);
+im_size = size(v);
+imshow(image1);
+hold on;
+X_axis = [8:15:im_size(1)*15];
+Y_axis = [8:15:im_size(2)*15];
+quiver(X_axis, Y_axis, v(:,:,1),v(:,:,2), 'c');
+%% Lucas-Kanade symth
+image1 = imread('synth1.pgm');
+image2 = imread('synth2.pgm');
 
+v = lucas_kanade(image1, image2);
+im_size = size(v);
+imshow(image1);
+hold on;
+X_axis = [8:15:im_size(1)*15];
+Y_axis = [8:15:im_size(2)*15];
+quiver(X_axis, Y_axis, v(:,:,1),v(:,:,2), 'c');
