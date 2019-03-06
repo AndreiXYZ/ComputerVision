@@ -13,7 +13,6 @@ function [H, corners] = harris_corner_detector(input_image, threshold)
     G = fspecial('gaussian', w, stddev);
     %get its derivatives along both axis
     [Gx Gy] = gradient(G);
-    
     %convolve around x axis using Gaussian derivative
     i_x = conv2(img, Gx, 'same');
     %convolve around y axis using Gaussian derivative
@@ -51,9 +50,7 @@ function [H, corners] = harris_corner_detector(input_image, threshold)
             %create Q
             Q = [A(i,j) B(i,j); B(i,j) C(i,j)];
             %compute the entry in the H matrix
-            lambda1 = Q(1,1);
-            lambda2 = Q(2,2);
-            H(i,j) = lambda1*lambda2-k*((lambda1+lambda2)^2);
+            H(i,j) = det(Q)-k*trace(Q)^2;
         end
     end
 
@@ -73,4 +70,5 @@ function [H, corners] = harris_corner_detector(input_image, threshold)
     hold on;
     plot(corners(:,2), corners(:,1), 'o');
     title('Detected Corner Points');
+    
     
