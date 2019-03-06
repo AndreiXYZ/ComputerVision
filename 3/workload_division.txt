@@ -1,0 +1,3 @@
+Andrei Apostol, Traian Vidrascu: Harris Corner Detector
+Dragos Grama: Feature Tracking
+Stefan Bogdan: Optical Flow with Lucas-Kanade Algorithm
