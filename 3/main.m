@@ -1,6 +1,7 @@
 toy = imread('person_toy/00000001.jpg');
 pingpong = imread('pingpong/0000.jpeg');
 treshold = 1e-6;
+%Test runs of Harris corner detector
 [H, c1] = harris_corner_detector(toy, treshold);
 [H, c2] = harris_corner_detector(pingpong, treshold);
 
