@@ -1,4 +1,4 @@
-function transform = RANSAC(image1,image2, keypoints1, keypoints2, n, p)
+function [transform, A_best_transform, b_best_transform] = RANSAC(image1,image2, keypoints1, keypoints2, n, p)
     x_best = [];
     max_inliners_count = 0;
     

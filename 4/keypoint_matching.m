@@ -2,7 +2,8 @@ function [keypoints1, keypoints2, scores] = keypoint_matching(image1, image2)
     % Refference: http://www.vlfeat.org/overview/sift.html    
     
     % The vl_sift command requires a single precision gray scale image so we
-    % convert the input images to single precision    
+    % convert the input images to single precision
+        
     single_img1 = single(image1);
     single_img2 = single(image2);
 
