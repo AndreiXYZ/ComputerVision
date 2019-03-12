@@ -13,7 +13,7 @@ function [panarama] = stitch(img1,img2)
     [transform, A_best, b_best] = RANSAC(image2, image1, kp2, kp1, 1000, 10);
 
     % Get the transformed coords of the corners of the second image within a
-    % the iamges combined as one
+    % the images combined as one
     [rows, cols] = size(image2);
     [rows_1, cols_1] = size(image1);
     corners = [1 1; 1 cols; rows 1; rows cols];
@@ -40,6 +40,10 @@ function [panarama] = stitch(img1,img2)
     %put the second image into the rows 
     for i = 1:rows
         for j = 1:cols
+            new_ij = ceil(A_best*[i j]'+b_best);
+            stitched_image(new_ij(1),new_ij(2)) = image2(i,j);
+            new_ij = floor(A_best*[i j]'+b_best);
+            stitched_image(new_ij(1),new_ij(2)) = image2(i,j);
             new_ij = round(A_best*[i j]'+b_best);
             stitched_image(new_ij(1),new_ij(2)) = image2(i,j);
         end
