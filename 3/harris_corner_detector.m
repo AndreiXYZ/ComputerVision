@@ -2,7 +2,6 @@ function [H, corners] = harris_corner_detector(input_image, threshold)
     %get rows and cols of image
     img = rgb2gray(im2double(input_image));
     [num_rows, num_cols] = size(img);
-    %create Gx and Gy
     w=9; %size of window
     stddev=2; %stddev of Gaussian
     
