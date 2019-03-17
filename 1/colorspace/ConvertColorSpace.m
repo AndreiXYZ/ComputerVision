@@ -1,4 +1,4 @@
-function [new_image] = ConvertColorSpace(input_image, colorspace)
+function [new_image] = convertColorSpace(input_image, colorspace)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Converts an RGB image into a specified color space, visualizes the 
 % color channels and returns the image in its new color space.                     
