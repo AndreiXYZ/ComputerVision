@@ -4,7 +4,7 @@ rng(42);
 run('./vlfeat-0.9.21/toolbox/vl_setup');
 
 % Dragos path(windows)
-run('C:/Program Files/MATLAB/R2018b/vlfeat-0.9.21-bin/toolbox/vl_setup')
+%run('C:/Program Files/MATLAB/R2018b/vlfeat-0.9.21-bin/toolbox/vl_setup')
 
 %% Remove unwanted classes from dataset and save result to disk. Only need to run once
 %remove_classes();
@@ -40,9 +40,14 @@ for i=(num_train_imgs/2)+1:num_train_imgs
     %neighbor in train_features for the corresponding row in d.
     %Now encode each image as a bag of words.
     idx = i-num_train_imgs/2;
-    imghists(idx,indexes) = imghists(idx,indexes) + 1;
+    [n,x] = hist(indexes, unique(indexes));
+    imghists(idx,x) = n;
 end
 
-size(imghists)
+%% Normalize each histogram
+for i=1:size(imghists,1)
+    imghists(i,:) = double(imghists(i,:))/double(sum(imghists(i,:)));
+end
 
-
+%Test it
+plot(imghists(1,:))
