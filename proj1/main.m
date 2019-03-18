@@ -34,6 +34,7 @@ for i=(num_train_images/2)+1:num_train_imgs
     %neighbor in train_features for the corresponding row in d.
     %Now encode each image as a bag of words.
     idx = i-num_train_images/2;
+    %replace with counts
     imghists(idx,indexes) = 1;
 end
 
