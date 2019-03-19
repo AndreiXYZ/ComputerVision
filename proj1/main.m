@@ -19,35 +19,11 @@ load('stl10_matlab/grayscale_sifts.mat');
 % save('stl10_matlab/centroids1000.mat', 'centroids');
 
 
-%% Now build the bag of visual words from the rest of the images. This will be used to train our svm
-
+%% Build bag of visual words histograms
 load('stl10_matlab/centroids1000.mat');
 load('stl10_matlab/train_curated.mat');
-num_train_imgs = size(X_train, 1);
+[imghists,labels] = create_histograms(centroids,X_train,y_train);
 
-%Use the other half of  the images to build bovw
-size(train_features)
-size(num_train_imgs)
-imghists = zeros(num_train_imgs/2,length(centroids));
-for i=(num_train_imgs/2)+1:num_train_imgs
-    img = X_train(i,:);
-    img = unflatten_image(img);
-    img = single(rgb2gray(im2double(img)));
-    [f,d] = vl_sift(img);
-    d = double(d');
-    indexes = knnsearch(centroids, d);
-    %Each row of indexes contains the index of the nearest
-    %neighbor in train_features for the corresponding row in d.
-    %Now encode each image as a bag of words.
-    idx = i-num_train_imgs/2;
-    [n,x] = hist(indexes, unique(indexes));
-    imghists(idx,x) = n;
-end
+%% Train SVM
+models = training_SVM(imghists,labels);
 
-%% Normalize each histogram
-for i=1:size(imghists,1)
-    imghists(i,:) = double(imghists(i,:))/double(sum(imghists(i,:)));
-end
-
-%Test it
-plot(imghists(1,:))
