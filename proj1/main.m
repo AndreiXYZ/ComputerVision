@@ -51,3 +51,6 @@ end
 
 %Test it
 plot(imghists(1,:))
+
+%% Train svm
+
