@@ -19,10 +19,10 @@ load('stl10_matlab/grayscale_sifts.mat');
 % save('stl10_matlab/centroids1000.mat', 'centroids');
 
 
-%% Now build the bag of visual words from the rest of the images. This will be used to train our svm
-
+%% Build bag of visual words histograms
 load('stl10_matlab/centroids1000.mat');
 load('stl10_matlab/train_curated.mat');
+
 num_train_imgs = size(X_train, 1);
 
 %Use the other half of  the images to build bovw
@@ -52,5 +52,9 @@ end
 %Test it
 plot(imghists(1,:))
 
-%% Train svm
+[imghists,labels] = create_histograms(centroids,X_train,y_train);
+
+%% Train SVM
+models = training_SVM(imghists,labels);
+
 
