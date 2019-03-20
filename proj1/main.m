@@ -39,6 +39,8 @@ scores = classification(imghists_test,labels_test,models);
 [rankings, top5, bottom5] = ranking_lists(scores,labels_test);
 
 %% Get MAP
+[maps,mean_map] = getMap(rankings);
+
 
 
 

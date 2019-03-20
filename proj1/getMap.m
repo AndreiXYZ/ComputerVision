@@ -1,18 +1,16 @@
-function ap = getAp(y_true, y_predicted, at_index)
-    %get average precision for 1 class
-    %precision = true_positives/total_positives
-    recalls = zeros(1);
-    for i=1:at_index
-        [c, cm, ind, per] = confusion(y_true(1:i), y_predicted(1:i));
-        tp = cm(2,2);
-        fp = cm(1,2);
-        tn = cm(1,1);
-        fn = cm(2,1);
-        
-        tp+fp
-        precision = tp/(tp+fp)
-        average_precisions(i) = precision*(y_true(i)==1);
+function [maps, mean_map] = getMap(rankings)   
+    maps = [];    
+    for i=1:5
+        suma = 0;
+        nr_class_images = 0;
+        m = sum(rankings(:,i) == 1);
+        for j=1:length(rankings)
+            if rankings(j,i) == 1
+                nr_class_images = nr_class_images+1;
+                suma = suma + double(nr_class_images)/j;
+            end        
+        end
+        maps = [maps;double(suma)/m];
     end
-    ap = mean(average_precisions);
-    ap
+    mean_map = mean(maps);
 end
