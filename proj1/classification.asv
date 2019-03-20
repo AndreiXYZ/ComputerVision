@@ -1,0 +1,19 @@
+function [ground_truth, predicted, accuracies,  scores] = classification(imghists, labels, models)
+    classes = [1,2,3,7,9];
+    ground_truth = [];
+    predicted = [];
+    accuracies = [];
+    scores = [];
+    for i=1:length(models)
+        binary_labels = double(labels == classes(i));
+        [predicted_label, accuracy,  score] = predict(binary_labels, sparse(imghists), models(i));
+
+        if models(i).Label(1) == 0 
+            score = -score; 
+        end
+        ground_truth = [ground_truth,binary_labels];
+        
+        
+    end
+end
+

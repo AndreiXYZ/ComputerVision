@@ -23,23 +23,19 @@ load('stl10_matlab/grayscale_sifts.mat');
 load('stl10_matlab/centroids1000.mat');
 load('stl10_matlab/train_curated.mat');
 
-[imghists_train,labels_train] = create_histograms(centroids,X_train,y_train,size(X_train,1)/2);
+[imghists_train,labels_train] = create_histograms(centroids,X_train,y_train,0);
 
 %% Train SVM
 models = training_SVM(imghists_train,labels_train);
 %save('stl10_matlab/models.mat', 'models');
 
-%% Classification and ranking lists
+%% Classification
 load('stl10_matlab/test_curated.mat');
 %load('stl10_matlab/models.mat');
+%load('stl10_matlab/centroids1000.mat');
 
 [imghists_test,labels_test] = create_histograms(centroids,X_test,y_test,0);
-scores = classification(imghists_test,labels_test,models);
-
-[rankings, top5, bottom5] = ranking_lists(scores,labels_test);
-
-%% Get MAP
-
+[ground_truth, predicted, accuracies,  scores] = classification(imghists_test,labels_test,models);
 
 
 
