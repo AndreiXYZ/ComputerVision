@@ -6,6 +6,9 @@ run('./vlfeat-0.9.21/toolbox/vl_setup');
 % Dragos path(windows)
 %run('C:/Program Files/MATLAB/R2018b/vlfeat-0.9.21-bin/toolbox/vl_setup')
 
+% Traian path(windows)
+%run('D:/MscAI/2nd Semester 1st Period/Computer Vision 1/ComputerVision/proj1/vlfeat-0.9.21/toolbox/vl_setup');
+
 %% Remove unwanted classes from dataset and save result to disk. Only need to run once
 %remove_classes();
 
@@ -13,6 +16,12 @@ run('./vlfeat-0.9.21/toolbox/vl_setup');
 %feature_extraction();
 
 load('stl10_matlab/grayscale_sifts.mat');
+
+%load('stl10_matlab/grayscale_sifts.mat');
+%% Extract sift (rgb) features and save them to disk. Only need to run once
+%feature_extraction_rgb();
+
+%load('stl10_matlab/rgb_sifts.mat');
 
 %% Run kmeans. The cluster centroids will represent our vocabulary
 % [indexes, centroids] = kmeans(train_features, 1000);
