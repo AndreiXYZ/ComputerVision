@@ -9,8 +9,8 @@ function [rankings, top5, bottom5] = ranking_lists(scores,labels)
         [sorted, img_indexes] = sortrows(aux, 1);
         ranking = sorted(:,2);
         rankings = [rankings,ranking]; 
-        top5 = [top5; img_indexes(1)];
-        bottom5 = [bottom5; img_indexes(end)];
+        top5 = [top5, img_indexes(1:5)];
+        bottom5 = [bottom5, img_indexes(end-4:end)];
     end
     
     
