@@ -1,8 +1,7 @@
 function [net, info, expdir] = finetune_cnn(varargin)
 
 %% Define options
-run(fullfile(fileparts(mfilename('fullpath')), ...
-  '..', '..', '..', 'matlab', 'vl_setupnn.m')) ;
+run('matconvnet-1.0-beta23/matlab/vl_setupnn.m') ;
 
 opts.modelType = 'lenet' ;
 [opts, varargin] = vl_argparse(opts, varargin) ;
@@ -29,6 +28,7 @@ opts.train.gpus = [0];
 net = update_model();
 
 %% TODO: Implement getIMDB function below
+
 
 if exist(opts.imdbPath, 'file')
   imdb = load(opts.imdbPath) ;
@@ -85,6 +85,74 @@ splits = {'train', 'test'};
 %% TODO: Implement your loop here, to create the data structure described in the assignment
 %% Use train.mat and test.mat we provided from STL-10 to fill in necessary data members for training below
 %% You will need to, in a loop function,  1) read the image, 2) resize the image to (32,32,3), 3) read the label of that image
+train_mat =  load('stl10_matlab/train.mat');
+test_mat = load('stl10_matlab/test.mat');
+
+
+%% Preprocessing Training set
+idx = 1; % number of images added to the data collection
+for i = 1: 5000 % 5000 images in the train set
+    img_lbl = train_mat.y(i); % current image label
+    lbl = 0;
+    % we will work on label indexes not on their names , here are the
+    % indexes of labels in the data set
+    % airplane = 1 
+    % birds = 2
+    % ships = 9
+    % horses = 7
+    % cars = 3
+    % new labels according to the assignment
+    
+    if img_lbl < 3
+       lbl = img_lbl; 
+    elseif img_lbl == 9
+       lbl = 3;
+    elseif img_lbl == 7
+       lbl = 4;
+    elseif img_lbl == 3
+        lbl = 5;
+    end
+    if lbl > 0
+        labels(idx) = lbl;
+        sets(idx) = 1;
+        image = reshape(train_mat.X(i,:,:), 96, 96, 3); 
+        % images are stored as vectors, 
+        % we convert them back to the original size 96x96x3
+        % see https://cs.stanford.edu/~acoates/stl10/
+        resized_image = imresize(image, [32, 32]); % resize image to 32x32x3
+        data(:,:,:,idx) = resized_image;
+        idx = idx + 1;
+    end
+    
+end
+
+%% Preprocessing Testinging set
+for i = 1:8000 % 8000 images in the test set
+    img_lbl = test_mat.y(i); % current image label
+    lbl = 0;
+    if img_lbl < 3
+       lbl = img_lbl; 
+    elseif img_lbl == 9
+       lbl = 3;
+    elseif img_lbl == 7
+       lbl = 4;
+    elseif img_lbl == 3
+        lbl = 5;
+    end
+    if lbl > 0
+        labels(idx) = lbl;
+        sets(idx) = 2;
+        image = reshape(test_mat.X(i,:,:), 96, 96, 3); 
+        % images are stored as vectors, 
+        % we convert them back to the original size 96x96x3
+        % see https://cs.stanford.edu/~acoates/stl10/
+        resized_image = imresize(image, [32, 32]); % resize image to 32x32x3
+        data(:,:,:,idx) = resized_image;
+        idx = idx + 1;
+    end
+    
+end
+data = double(data);
 
 %%
 % subtract mean

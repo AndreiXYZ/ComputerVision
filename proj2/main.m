@@ -1,8 +1,10 @@
 %% main function 
-
+pre_train = load('data/pre_trained_model.mat');
+addpath('matconvnet-1.0-beta23/matlab')
+vl_simplenn_display(pre_train.net);
 
 %% fine-tune cnn
-
+clc
 [net, info, expdir] = finetune_cnn();
 
 %% extract features and train svm
