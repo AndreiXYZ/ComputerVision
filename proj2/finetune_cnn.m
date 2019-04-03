@@ -2,7 +2,7 @@ function [net, info, expdir] = finetune_cnn(varargin)
 
 %% Define options
 run('matconvnet-1.0-beta23/matlab/vl_setupnn.m') ;
-
+%vl_compilenn('enableGPU', false);
 opts.modelType = 'lenet' ;
 [opts, varargin] = vl_argparse(opts, varargin) ;
 
@@ -19,7 +19,7 @@ opts.train = struct() ;
 opts = vl_argparse(opts, varargin) ;
 if ~isfield(opts.train, 'gpus'), opts.train.gpus = []; end;
 
-opts.train.gpus = [0];
+opts.train.gpus = [];
 
 
 
@@ -45,7 +45,7 @@ net.meta.classes.name = imdb.meta.classes(:)' ;
 %                                                                     Train
 % -------------------------------------------------------------------------
 
-trainfn = @cnn_train ;
+trainfn = @cnn_train;
 [net, info] = trainfn(net, imdb, getBatch(opts), ...
   'expDir', opts.expDir, ...
   net.meta.trainOpts, ...
@@ -120,7 +120,7 @@ for i = 1: 5000 % 5000 images in the train set
         % we convert them back to the original size 96x96x3
         % see https://cs.stanford.edu/~acoates/stl10/
         resized_image = imresize(image, [32, 32]); % resize image to 32x32x3
-        data(:,:,:,idx) = resized_image;
+        data(:,:,:,idx) = resized_image(:,:,:);
         idx = idx + 1;
     end
     
@@ -147,16 +147,17 @@ for i = 1:8000 % 8000 images in the test set
         % we convert them back to the original size 96x96x3
         % see https://cs.stanford.edu/~acoates/stl10/
         resized_image = imresize(image, [32, 32]); % resize image to 32x32x3
-        data(:,:,:,idx) = resized_image;
+        data(:,:,:,idx) = resized_image(:,:,:);
         idx = idx + 1;
     end
     
 end
-data = double(data);
-
+data = single(data);
+labels = single(labels);
+sets = single(sets);
 %%
 % subtract mean
-dataMean = mean(data(:, :, :, sets == 1), 4);
+dataMean = (mean(data(:, :, :, sets == 1), 4));
 data = bsxfun(@minus, data, dataMean);
 
 imdb.images.data = data ;
