@@ -1,5 +1,5 @@
 function imghists = create_histograms(centroids,featuretype)
-    %get size of training data
+    % load the right dataset
     switch featuretype
         case 'test'
             switch centroids.colorspace       
@@ -27,6 +27,7 @@ function imghists = create_histograms(centroids,featuretype)
             end
     end  
     
+    % get the size of the datasets
     switch featuretype
         case 'test'
             start = 1;
@@ -36,7 +37,7 @@ function imghists = create_histograms(centroids,featuretype)
             stop = num_train_images;
     end
     
-    %extract features from half of the training images
+    
     imghists = [];
     for i=start:stop
         idx = (i+1) - start;
