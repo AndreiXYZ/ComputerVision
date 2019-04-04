@@ -152,6 +152,7 @@ for i = 1:8000 % 8000 images in the test set
     end
     
 end
+%%
 data = single(data);
 labels = single(labels);
 sets = single(sets);
